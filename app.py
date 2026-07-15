@@ -18,6 +18,131 @@ from utils.data import (
     load_data,
     parse_sheet_reference,
 )
+
+TRANSLATIONS = {
+    "en": {
+        "dashboard_title": "Promotor Master Dashboard",
+        "dashboard_subtitle": "Enterprise summary for promoter coverage, blacklist verification and store health.",
+        "google_sheet_connected": "Google Sheet Connected",
+        "last_sync": "Last Sync",
+        "records": "Records",
+        "version": "Version",
+        "source": "Source",
+        "last_refresh": "Last refresh",
+        "loading_status": "Loading status: Ready",
+        "loading_data": "Loading data...",
+        "controls_title": "Dashboard Controls",
+        "data_section": "Data",
+        "refresh_data": "Refresh data",
+        "sheet_id_url": "Google Sheet ID / URL",
+        "sheet_gid": "Sheet GID",
+        "use_private_api": "Use Google Sheets API",
+        "use_local_csv": "Use local CSV",
+        "filter_section": "Filter",
+        "global_search": "Global Search",
+        "global_search_placeholder": "Search by Store, Promotor, Mobile, Brand, Area Manager...",
+        "area_manager": "Area Manager",
+        "brand": "Brand",
+        "category": "Category",
+        "active": "Active",
+        "advanced_filter": "Advanced Filter",
+        "verification_only": "Verification only",
+        "blacklist_only": "Blacklist only",
+        "show_inactive": "Show inactive",
+        "export_section": "Export",
+        "export_csv": "Export CSV",
+        "export_excel": "Export Excel",
+        "export_blacklist_csv": "Export Blacklist CSV",
+        "export_blacklist_excel": "Export Blacklist Excel",
+        "help_section": "Help",
+        "help_text": "Use filters to narrow the dataset. Refresh clears caches. Export using the buttons above.",
+        "loading_error": "Unable to load Google Sheet data:",
+        "sheet_error": "The sheet may not be public or shared. Try enabling Google Sheets API or use offline CSV.",
+        "empty_data": "Data is empty. Please check the Sheet ID / URL and GID.",
+        "executive_summary": "Executive Summary",
+        "active_promoters": "Active Promoters",
+        "active_only": "Active only",
+        "blacklist_metric": "Blacklist",
+        "blacklist_total": "Total blacklist records",
+        "stores_metric": "Stores",
+        "monitored_stores": "Monitored stores",
+        "brands_metric": "Brands",
+        "distinct_brands": "Distinct brands",
+        "analysis_section": "Brand & Category Analysis",
+        "health_score_title": "Dashboard Health Score",
+        "health_score_note": "Health score based on coverage, verification, and duplicates.",
+        "blacklist_center": "Blacklist Center",
+        "no_blacklist_records": "No blacklist records were found in the dataset.",
+        "top_preview": "Top 20 Data Preview",
+        "view_full_data": "View Full Data",
+        "language_label": "Language",
+        "language_en": "English",
+        "language_vi": "Tiếng Việt",
+    },
+    "vi": {
+        "dashboard_title": "Bảng điều khiển Promotor",
+        "dashboard_subtitle": "Tổng quan doanh nghiệp về coverage promotors, kiểm tra blacklist và sức khỏe cửa hàng.",
+        "google_sheet_connected": "Đã kết nối Google Sheet",
+        "last_sync": "Đồng bộ lần cuối",
+        "records": "Số bản ghi",
+        "version": "Phiên bản",
+        "source": "Nguồn",
+        "last_refresh": "Lần làm mới cuối",
+        "loading_status": "Trạng thái tải: Sẵn sàng",
+        "loading_data": "Đang tải dữ liệu...",
+        "controls_title": "Điều khiển Dashboard",
+        "data_section": "Dữ liệu",
+        "refresh_data": "Làm mới dữ liệu",
+        "sheet_id_url": "Google Sheet ID / URL",
+        "sheet_gid": "Sheet GID",
+        "use_private_api": "Dùng Google Sheets API",
+        "use_local_csv": "Dùng CSV local",
+        "filter_section": "Bộ lọc",
+        "global_search": "Tìm kiếm chung",
+        "global_search_placeholder": "Tìm theo Cửa hàng, Promotor, Số điện thoại, Thương hiệu, Quản lý khu vực...",
+        "area_manager": "Quản lý khu vực",
+        "brand": "Thương hiệu",
+        "category": "Danh mục",
+        "active": "Trạng thái",
+        "advanced_filter": "Bộ lọc nâng cao",
+        "verification_only": "Chỉ verification",
+        "blacklist_only": "Chỉ blacklist",
+        "show_inactive": "Hiện inactive",
+        "export_section": "Xuất dữ liệu",
+        "export_csv": "Xuất CSV",
+        "export_excel": "Xuất Excel",
+        "export_blacklist_csv": "Xuất blacklist CSV",
+        "export_blacklist_excel": "Xuất blacklist Excel",
+        "help_section": "Trợ giúp",
+        "help_text": "Dùng bộ lọc để thu hẹp dữ liệu. Làm mới sẽ xóa cache. Xuất dữ liệu bằng các nút trên.",
+        "loading_error": "Không tải được dữ liệu Google Sheet:",
+        "sheet_error": "Sheet có thể chưa public hoặc chưa được chia sẻ. Thử bật Google Sheets API hoặc dùng CSV offline.",
+        "empty_data": "Dữ liệu trống. Vui lòng kiểm tra lại Sheet ID / URL và GID.",
+        "executive_summary": "Tóm tắt tổng quan",
+        "active_promoters": "Promotor đang hoạt động",
+        "active_only": "Chỉ hoạt động",
+        "blacklist_metric": "Blacklist",
+        "blacklist_total": "Tổng bản ghi blacklist",
+        "stores_metric": "Cửa hàng",
+        "monitored_stores": "Cửa hàng đang giám sát",
+        "brands_metric": "Thương hiệu",
+        "distinct_brands": "Số thương hiệu",
+        "analysis_section": "Phân tích Thương hiệu & Danh mục",
+        "health_score_title": "Điểm sức khỏe Dashboard",
+        "health_score_note": "Điểm sức khỏe dựa trên coverage, kiểm tra và trùng lặp.",
+        "blacklist_center": "Trung tâm Blacklist",
+        "no_blacklist_records": "Không có bản ghi blacklist trong dữ liệu.",
+        "top_preview": "Xem nhanh 20 dòng đầu",
+        "view_full_data": "Xem toàn bộ dữ liệu",
+        "language_label": "Ngôn ngữ",
+        "language_en": "English",
+        "language_vi": "Tiếng Việt",
+    },
+}
+
+
+def get_label(lang: str, key: str) -> str:
+    return TRANSLATIONS.get(lang, TRANSLATIONS["en"]).get(key, key)
 from utils.insights import (
     build_executive_summary,
     build_health_score,
@@ -28,14 +153,14 @@ from utils.insights import (
 
 # --- UI helpers ---
 
-def render_header(record_count: int, source_label: str, last_sync: str) -> None:
+def render_header(record_count: int, source_label: str, last_sync: str, lang_code: str) -> None:
     st.markdown(
         f"""
         <div class='dashboard-header'>
             <div style='display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:18px;'>
                 <div style='min-width:280px;'>
-                    <div class='dash-title'>Promotor Master Dashboard</div>
-                    <div class='dash-subtitle'>Enterprise summary for promoter coverage, blacklist verification and store health.</div>
+                    <div class='dash-title'>{get_label(lang_code, 'dashboard_title')}</div>
+                    <div class='dash-subtitle'>{get_label(lang_code, 'dashboard_subtitle')}</div>
                 </div>
                 <div style='display:flex; flex-wrap:wrap; gap:12px; align-items:center;'>
                     <div class='status-pill connected'>Google Sheet Connected</div>
@@ -50,14 +175,14 @@ def render_header(record_count: int, source_label: str, last_sync: str) -> None:
     )
 
 
-def render_status_bar(source_status: str, last_sync: str) -> None:
+def render_status_bar(source_status: str, last_sync: str, lang_code: str) -> None:
     st.markdown(
         f"""
         <div class='status-strip'>
             <div style='display:flex; flex-wrap:wrap; justify-content:space-between; gap:14px;'>
-                <div class='small-text'>Source: {source_status}</div>
-                <div class='small-text'>Last refresh: {last_sync}</div>
-                <div class='small-text'>Loading status: Ready</div>
+                <div class='small-text'>{get_label(lang_code, 'source')}: {source_status}</div>
+                <div class='small-text'>{get_label(lang_code, 'last_refresh')}: {last_sync}</div>
+                <div class='small-text'>{get_label(lang_code, 'loading_status')}</div>
             </div>
         </div>
         """,
@@ -74,24 +199,25 @@ def render_sidebar(
     local_csv,
     selected_filters: Dict[str, List[str]],
     search_text: str,
+    lang_code: str,
 ) -> Dict[str, object]:
     sidebar = st.sidebar
-    sidebar.title("Dashboard Controls")
-    sidebar.markdown("### Data")
-    sidebar.button("Refresh data", on_click=st.rerun)
-    sidebar.text_input("Google Sheet ID / URL", value=sheet_ref, key="sheet_ref")
-    sidebar.text_input("Sheet GID", value=gid, key="sheet_gid")
-    use_private = sidebar.checkbox("Dùng Google Sheets API", value=use_private, key="use_private")
-    use_local_csv = sidebar.checkbox("Dùng CSV local", value=use_local_csv, key="use_local_csv")
+    sidebar.title(get_label(lang_code, "controls_title"))
+    sidebar.markdown("### " + get_label(lang_code, "data_section"))
+    sidebar.button(get_label(lang_code, "refresh_data"), on_click=st.rerun)
+    sidebar.text_input(get_label(lang_code, "sheet_id_url"), value=sheet_ref, key="sheet_ref")
+    sidebar.text_input(get_label(lang_code, "sheet_gid"), value=gid, key="sheet_gid")
+    use_private = sidebar.checkbox(get_label(lang_code, "use_private_api"), value=use_private, key="use_private")
+    use_local_csv = sidebar.checkbox(get_label(lang_code, "use_local_csv"), value=use_local_csv, key="use_local_csv")
     if use_local_csv:
         local_csv = sidebar.file_uploader("Upload CSV", type=["csv"], key="local_csv")
 
     sidebar.markdown("---")
-    sidebar.markdown("### Filter")
+    sidebar.markdown("### " + get_label(lang_code, "filter_section"))
     globals_search = sidebar.text_input(
-        "Global Search",
+        get_label(lang_code, "global_search"),
         value=search_text,
-        placeholder="Search by Store, Promotor, Mobile, Brand, Area Manager...",
+        placeholder=get_label(lang_code, "global_search_placeholder"),
         key="global_search",
     )
 
@@ -131,17 +257,15 @@ def render_sidebar(
         sidebar.checkbox("Show inactive", value=False, key="show_inactive")
 
     sidebar.markdown("---")
-    sidebar.markdown("### Export")
-    sidebar.button("Export CSV", key="export_csv")
-    sidebar.button("Export Excel", key="export_excel")
-    sidebar.button("Export Blacklist CSV", key="export_blacklist_csv")
-    sidebar.button("Export Blacklist Excel", key="export_blacklist_excel")
+    sidebar.markdown("### " + get_label(lang_code, "export_section"))
+    sidebar.button(get_label(lang_code, "export_csv"), key="export_csv")
+    sidebar.button(get_label(lang_code, "export_excel"), key="export_excel")
+    sidebar.button(get_label(lang_code, "export_blacklist_csv"), key="export_blacklist_csv")
+    sidebar.button(get_label(lang_code, "export_blacklist_excel"), key="export_blacklist_excel")
 
     sidebar.markdown("---")
-    sidebar.markdown("### Help")
-    sidebar.info(
-        "Use filters to narrow the dataset. Refresh clears caches. Export using the buttons above."
-    )
+    sidebar.markdown("### " + get_label(lang_code, "help_section"))
+    sidebar.info(get_label(lang_code, "help_text"))
 
     return {
         "globals_search": globals_search,
@@ -163,25 +287,30 @@ def main() -> None:
     local_csv = None
     selected_filters: Dict[str, List[str]] = {}
     search_text = ""
+    language = st.sidebar.selectbox(
+        "Language",
+        ["English", "Tiếng Việt"],
+        index=0,
+        key="language_select",
+    )
+    lang_code = "en" if language == "English" else "vi"
 
     data = None
     error_message = None
     try:
-        with st.spinner("Loading data..."):
+        with st.spinner(get_label(lang_code, "loading_data")):
             data = load_data(sheet_ref, gid, use_private, local_file=local_csv)
     except Exception as exc:
         error_message = str(exc)
 
     if error_message:
-        st.error("Không tải được dữ liệu Google Sheet:")
+        st.error(get_label(lang_code, "loading_error"))
         st.error(error_message)
-        st.warning(
-            "Sheet có thể chưa public hoặc chưa được chia sẻ. Thử bật Google Sheets API hoặc dùng CSV offline."
-        )
+        st.warning(get_label(lang_code, "sheet_error"))
         return
 
     if data is None or data.empty:
-        st.warning("Dữ liệu trống. Vui lòng kiểm tra lại Sheet ID / URL và GID.")
+        st.warning(get_label(lang_code, "empty_data"))
         return
 
     sidebar_state = render_sidebar(
@@ -193,6 +322,7 @@ def main() -> None:
         local_csv,
         selected_filters,
         search_text,
+        lang_code,
     )
     search_text = sidebar_state["globals_search"]
     selected_filters = sidebar_state["selected_filters"]
@@ -232,31 +362,31 @@ def main() -> None:
     )
 
     current_time = datetime.now().strftime("%d %b %Y %H:%M")
-    render_header(len(data), "Google Sheet Connected", current_time)
-    render_status_bar("Google Sheet Connected", current_time)
+    render_header(len(data), get_label(lang_code, "google_sheet_connected"), current_time, lang_code)
+    render_status_bar(get_label(lang_code, "google_sheet_connected"), current_time, lang_code)
 
-    st.markdown("<div class='section-title'>Executive Summary</div>", unsafe_allow_html=True)
+    st.markdown(f"<div class='section-title'>{get_label(lang_code, 'executive_summary')}</div>", unsafe_allow_html=True)
     st.markdown(f"<div class='alert-banner'>{summary_text}</div>", unsafe_allow_html=True)
 
     col1, col2, col3, col4 = st.columns(4, gap="large")
     col1.markdown(
-        f"<div class='metric-card'><div class='metric-title'>👥 Active Promotors</div><div class='metric-value'>{len(filtered_data[filtered_data[cols.get('active')] == 'ACTIVE']) if cols.get('active') else len(filtered_data):,}</div><div class='metric-note'>Active only</div></div>",
+        f"<div class='metric-card'><div class='metric-title'>👥 {get_label(lang_code, 'active_promoters')}</div><div class='metric-value'>{len(filtered_data[filtered_data[cols.get('active')] == 'ACTIVE']) if cols.get('active') else len(filtered_data):,}</div><div class='metric-note'>{get_label(lang_code, 'active_only')}</div></div>",
         unsafe_allow_html=True,
     )
     col2.markdown(
-        f"<div class='metric-card'><div class='metric-title'>⚠ Blacklist</div><div class='metric-value'>{len(blacklist_data):,}</div><div class='metric-note'>Total blacklist records</div></div>",
+        f"<div class='metric-card'><div class='metric-title'>⚠ {get_label(lang_code, 'blacklist_metric')}</div><div class='metric-value'>{len(blacklist_data):,}</div><div class='metric-note'>{get_label(lang_code, 'blacklist_total')}</div></div>",
         unsafe_allow_html=True,
     )
     col3.markdown(
-        f"<div class='metric-card'><div class='metric-title'>🏪 Stores</div><div class='metric-value'>{len(store_summary):,}</div><div class='metric-note'>Monitored stores</div></div>",
+        f"<div class='metric-card'><div class='metric-title'>🏪 {get_label(lang_code, 'stores_metric')}</div><div class='metric-value'>{len(store_summary):,}</div><div class='metric-note'>{get_label(lang_code, 'monitored_stores')}</div></div>",
         unsafe_allow_html=True,
     )
     col4.markdown(
-        f"<div class='metric-card'><div class='metric-title'>📱 Brands</div><div class='metric-value'>{filtered_data[cols.get('brand')].nunique() if cols.get('brand') else 0:,}</div><div class='metric-note'>Distinct brands</div></div>",
+        f"<div class='metric-card'><div class='metric-title'>📱 {get_label(lang_code, 'brands_metric')}</div><div class='metric-value'>{filtered_data[cols.get('brand')].nunique() if cols.get('brand') else 0:,}</div><div class='metric-note'>{get_label(lang_code, 'distinct_brands')}</div></div>",
         unsafe_allow_html=True,
     )
 
-    st.markdown("<div class='section-title'>Brand & Category Analysis</div>", unsafe_allow_html=True)
+    st.markdown(f"<div class='section-title'>{get_label(lang_code, 'analysis_section')}</div>", unsafe_allow_html=True)
     chart_col1, chart_col2 = st.columns([3, 2], gap="large")
     with chart_col1:
         if cols.get("brand"):
@@ -269,27 +399,13 @@ def main() -> None:
             unsafe_allow_html=True,
         )
 
-    st.markdown("<div class='section-title'>Blacklist Center</div>", unsafe_allow_html=True)
+    st.markdown(f"<div class='section-title'>{get_label(lang_code, 'blacklist_center')}</div>", unsafe_allow_html=True)
     if blacklist_data.empty:
-        st.info("Không có blacklist records trong toàn bộ dữ liệu.")
+        st.info(get_label(lang_code, 'no_blacklist_records'))
     else:
-        render_preview_table(
-            blacklist_data,
-            [
-                cols.get("store_id"),
-                cols.get("store_name"),
-                cols.get("brand"),
-                cols.get("category"),
-                cols.get("active"),
-                cols.get("name"),
-                cols.get("mobile"),
-                cols.get("name_verification"),
-                cols.get("nik_verification"),
-                cols.get("area_manager"),
-            ],
-        )
+        render_preview_table(blacklist_data, blacklist_data.columns.tolist())
 
-    st.markdown("<div class='section-title'>Top 20 Data Preview</div>", unsafe_allow_html=True)
+    st.markdown(f"<div class='section-title'>{get_label(lang_code, 'top_preview')}</div>", unsafe_allow_html=True)
     render_preview_table(
         filtered_data,
         [
@@ -304,7 +420,7 @@ def main() -> None:
     )
 
     if len(filtered_data) > 20:
-        st.button("View Full Data", key="view_full_data")
+        st.button(get_label(lang_code, 'view_full_data'), key="view_full_data")
 
 
 if __name__ == "__main__":
