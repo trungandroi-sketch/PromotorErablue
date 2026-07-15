@@ -6,7 +6,7 @@ import pandas as pd
 import streamlit as st
 
 from charts.plotly_charts import render_brand_bar, render_category_donut
-from components.table import render_preview_table
+from components.table import render_preview_table, render_full_table
 from styles.theme import apply_theme
 from utils.data import (
     DEFAULT_GID,
@@ -75,6 +75,10 @@ TRANSLATIONS = {
         "no_blacklist_records": "No blacklist records were found in the dataset.",
         "top_preview": "Top 20 Data Preview",
         "view_full_data": "View Full Data",
+        "view_mode": "View mode",
+        "main_page": "Dashboard",
+        "blacklist_page": "Blacklist",
+        "raw_blacklist_note": "Showing the blacklist table exactly as the source sheet.",
         "language_label": "Language",
         "language_en": "English",
         "language_vi": "Tiếng Việt",
@@ -134,6 +138,10 @@ TRANSLATIONS = {
         "no_blacklist_records": "Không có bản ghi blacklist trong dữ liệu.",
         "top_preview": "Xem nhanh 20 dòng đầu",
         "view_full_data": "Xem toàn bộ dữ liệu",
+        "view_mode": "Chế độ xem",
+        "main_page": "Dashboard",
+        "blacklist_page": "Blacklist",
+        "raw_blacklist_note": "Hiển thị bảng blacklist giống như sheet gốc.",
         "language_label": "Ngôn ngữ",
         "language_en": "English",
         "language_vi": "Tiếng Việt",
@@ -203,6 +211,12 @@ def render_sidebar(
 ) -> Dict[str, object]:
     sidebar = st.sidebar
     sidebar.title(get_label(lang_code, "controls_title"))
+    selected_view = sidebar.radio(
+        get_label(lang_code, "view_mode"),
+        [get_label(lang_code, "main_page"), get_label(lang_code, "blacklist_page")],
+        index=0,
+        key="selected_view",
+    )
     sidebar.markdown("### " + get_label(lang_code, "data_section"))
     sidebar.button(get_label(lang_code, "refresh_data"), on_click=st.rerun)
     sidebar.text_input(get_label(lang_code, "sheet_id_url"), value=sheet_ref, key="sheet_ref")
@@ -212,8 +226,9 @@ def render_sidebar(
     if use_local_csv:
         local_csv = sidebar.file_uploader("Upload CSV", type=["csv"], key="local_csv")
 
-    sidebar.markdown("---")
-    sidebar.markdown("### " + get_label(lang_code, "filter_section"))
+    if selected_view == get_label(lang_code, "main_page"):
+        sidebar.markdown("---")
+        sidebar.markdown("### " + get_label(lang_code, "filter_section"))
     globals_search = sidebar.text_input(
         get_label(lang_code, "global_search"),
         value=search_text,
@@ -256,16 +271,17 @@ def render_sidebar(
         sidebar.checkbox("Blacklist only", value=False, key="blacklist_only")
         sidebar.checkbox("Show inactive", value=False, key="show_inactive")
 
-    sidebar.markdown("---")
-    sidebar.markdown("### " + get_label(lang_code, "export_section"))
-    sidebar.button(get_label(lang_code, "export_csv"), key="export_csv")
-    sidebar.button(get_label(lang_code, "export_excel"), key="export_excel")
-    sidebar.button(get_label(lang_code, "export_blacklist_csv"), key="export_blacklist_csv")
-    sidebar.button(get_label(lang_code, "export_blacklist_excel"), key="export_blacklist_excel")
+    if selected_view == get_label(lang_code, "main_page"):
+        sidebar.markdown("---")
+        sidebar.markdown("### " + get_label(lang_code, "export_section"))
+        sidebar.button(get_label(lang_code, "export_csv"), key="export_csv")
+        sidebar.button(get_label(lang_code, "export_excel"), key="export_excel")
+        sidebar.button(get_label(lang_code, "export_blacklist_csv"), key="export_blacklist_csv")
+        sidebar.button(get_label(lang_code, "export_blacklist_excel"), key="export_blacklist_excel")
 
-    sidebar.markdown("---")
-    sidebar.markdown("### " + get_label(lang_code, "help_section"))
-    sidebar.info(get_label(lang_code, "help_text"))
+        sidebar.markdown("---")
+        sidebar.markdown("### " + get_label(lang_code, "help_section"))
+        sidebar.info(get_label(lang_code, "help_text"))
 
     return {
         "globals_search": globals_search,
@@ -273,6 +289,7 @@ def render_sidebar(
         "use_private": use_private,
         "use_local_csv": use_local_csv,
         "local_csv": local_csv,
+        "selected_view": selected_view,
     }
 
 
@@ -329,6 +346,7 @@ def main() -> None:
     use_private = sidebar_state["use_private"]
     use_local_csv = sidebar_state["use_local_csv"]
     local_csv = sidebar_state["local_csv"]
+    selected_view = sidebar_state["selected_view"]
 
     cols = get_dashboard_columns(data.columns.tolist())
     filtered_data = filter_dataframe(data, selected_filters, search_text)
@@ -398,6 +416,15 @@ def main() -> None:
             f"<div class='health-score'><div style='font-size:1rem; font-weight:700; margin-bottom:12px;'>Dashboard Health Score</div><div style='font-size:2.5rem; font-weight:700;'>{health_score}</div><div class='small-text'>Health score based on coverage, verification, and duplicates.</div></div>",
             unsafe_allow_html=True,
         )
+
+    if selected_view == get_label(lang_code, "blacklist_page"):
+        st.markdown(f"<div class='section-title'>{get_label(lang_code, 'blacklist_center')}</div>", unsafe_allow_html=True)
+        st.info(get_label(lang_code, 'raw_blacklist_note'))
+        if blacklist_data.empty:
+            st.info(get_label(lang_code, 'no_blacklist_records'))
+        else:
+            render_full_table(blacklist_data, blacklist_data.columns.tolist())
+        return
 
     st.markdown(f"<div class='section-title'>{get_label(lang_code, 'blacklist_center')}</div>", unsafe_allow_html=True)
     if blacklist_data.empty:
