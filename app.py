@@ -198,6 +198,15 @@ def render_status_bar(source_status: str, last_sync: str, lang_code: str) -> Non
     )
 
 
+def render_blacklist_page(blacklist_data: pd.DataFrame, lang_code: str) -> None:
+    st.markdown(f"<div class='section-title'>{get_label(lang_code, 'blacklist_center')}</div>", unsafe_allow_html=True)
+    st.info(get_label(lang_code, 'raw_blacklist_note'))
+    if blacklist_data.empty:
+        st.info(get_label(lang_code, 'no_blacklist_records'))
+        return
+    render_full_table(blacklist_data, blacklist_data.columns.tolist())
+
+
 def render_sidebar(
     data: pd.DataFrame,
     sheet_ref: str,
@@ -418,19 +427,8 @@ def main() -> None:
         )
 
     if selected_view == get_label(lang_code, "blacklist_page"):
-        st.markdown(f"<div class='section-title'>{get_label(lang_code, 'blacklist_center')}</div>", unsafe_allow_html=True)
-        st.info(get_label(lang_code, 'raw_blacklist_note'))
-        if blacklist_data.empty:
-            st.info(get_label(lang_code, 'no_blacklist_records'))
-        else:
-            render_full_table(blacklist_data, blacklist_data.columns.tolist())
+        render_blacklist_page(blacklist_data, lang_code)
         return
-
-    st.markdown(f"<div class='section-title'>{get_label(lang_code, 'blacklist_center')}</div>", unsafe_allow_html=True)
-    if blacklist_data.empty:
-        st.info(get_label(lang_code, 'no_blacklist_records'))
-    else:
-        render_preview_table(blacklist_data, blacklist_data.columns.tolist())
 
     st.markdown(f"<div class='section-title'>{get_label(lang_code, 'top_preview')}</div>", unsafe_allow_html=True)
     render_preview_table(
